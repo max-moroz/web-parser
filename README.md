@@ -8,6 +8,11 @@
 * Final `items.csv` looks like:
 ![image](docs/Screenshot_1.png)
 
+## How to run
+* Clone repository from GitHub
+* Build the project launching `mvn clean install` from command line
+* Launch executable `Web-parser.jar` in `target` folder
+
 ## Possible ways of application optimization
 * Think about multithreading implementation to shorten time of app running
 * Format output to `items.csv` file in accordance to certain logic
