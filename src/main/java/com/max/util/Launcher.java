@@ -1,38 +1,26 @@
 package com.max.util;
 
-import com.max.parser.Parser;
-
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Launcher {
 
-    private static final String ELECTRONIC = "elektronika";
+    private final List<String> categories = Arrays.asList("elektronika?bmatch=cl-dict55-ctx-ele-1-4-1106", "zdrowie?bmatch=dict55-ctx-hea-1-4-1106", "dom-i-ogrod?bmatch=dict55-ctx-hou-1-4-1106");
 
-    private Parser parser;
     private InformationCollector collector;
-    private Saver saver;
+    private Writer writer;
 
-    public Launcher(Parser parser, InformationCollector collector, Saver saver) {
-        this.parser = parser;
+    public Launcher(InformationCollector collector, Writer writer) {
         this.collector = collector;
-        this.saver = saver;
+        this.writer = writer;
     }
 
     public void launchParsingAndSaving() throws IOException {
-
-        for (int i = 1; i <= 100; i++) {
-            parser.savePageIntoDocument(ELECTRONIC, i);
-
-            collector.fillCharacteristicsList();
-
-            //todo - limit to 100 entries
-            collector.saveElectronicItems();
-
-            if (collector.checkNumberOfItems() >= 100) {
-                break;
-            }
+        for (String category : categories) {
+            collector.collectLinks(category);
+            writer.saveItemsToFile();
+            collector.cleanLinksList();
         }
-
-        saver.saveItemsToFile();
     }
 }
